@@ -1,0 +1,116 @@
+#include <iostream>
+#include <iomanip>
+#include <fstream>
+#include <string>
+#include <list>
+#include <map>
+
+using namespace std;
+
+void print_list(list<int>& l) { //printet Liste
+	for (int e : l) { // e wird auf jedes Element des containers deklariert, :l gibt an über welchen Container iteriert wird
+		cout << e << ",";
+	}
+	cout << endl;
+}
+
+void print_map(map<int, string>& m) { //printet map
+	map<int, string>::iterator it;
+	for (it = m.begin(); it != m.end(); ++it) {
+		cout << it->first << "=>" << it->second << '\n'; //it->first greift auf int zu, second auf string
+	}
+}
+
+
+int main(int argc, char* argv[]) {
+
+	//Datei einlesen ohne main arg
+	ifstream infile("faust.txt"); // ifstream = Klasse, infile = Objekt mit faust drinnen, faust.txt in Ordner reintun
+	int i = 0;
+	string line;
+	while (getline(infile, line)) { //getline liest Zeile von Text(infile) und speichert in string line
+		cout << setw(4) << ++i << "\t" << line << endl; // setw() bestimmt seitenabstand, ++i zählt zeilen, line ist die Zeile aus text
+	}
+
+	//Datein einlesen und in andere reinschreiben
+	ifstream input;
+	input.open("faust.txt", ios::in); //ios::in modus zum Lesen der Datei
+	ofstream outfile("out.txt", ios::trunc); //ios::trunc löscht Inhalt der Datei vorher 
+	string zeile;
+	int o = 1;
+	while (getline(input, zeile, '\n')) {
+		outfile << o++ << "\t" << zeile << '\n';
+	}
+	input.close();
+	outfile.close();
+	
+	//Datei einlesen und in andre Datei reinschreiben mit main arg
+	if (argc != 3) { //Fehlermeldung
+		cerr << "Usage: " << argv[0] << " [input-file] [output-file]" << endl;
+		cerr << "   input-file must be an existing text file" << endl;
+		cerr << "   output-file will be created or overwritten if it exists" << endl;
+		return 64;
+	}
+	
+	ifstream datei;
+	datei.open(argv[1]);
+	if (!datei.is_open()) {
+		cerr << "Could not open" << argv[1] << endl;
+		return 66;
+	}
+
+	ofstream ofdatei;
+	ofdatei.open(argv[2], ios::trunc);
+	if (!ofdatei.is_open()) {
+		cerr << "Could not open" << argv[2] << endl;
+		return 73;
+	}
+	
+	string nase;
+	int z = 1;
+
+	while (getline(datei, nase)) {
+		ofdatei << ++z << "\t" << nase << endl;
+	}
+	
+	datei.close();
+	ofdatei.close();
+	
+	
+	
+	
+	//List
+	list<int> sabine; //erstellen der Liste
+	for (int i = 0; i < 11; ++i) { //ausfüllen
+		sabine.push_back(i);
+	}
+	print_list(sabine);
+	auto iterator = find(sabine.begin(), sabine.end(), 5); //Iterator deklarieren mit auto und bei 5 zeigen lassen
+	if (iterator != sabine.end()) {
+		cout << "Posiition von 5: " << distance(sabine.begin(), iterator) << endl; //gibt position von 5 aus
+	}
+	sabine.insert(iterator, 15); //fügt 15 hinzu
+	sabine.sort(); //sortiert aufsteigend
+	print_list(sabine);
+	for (iterator = sabine.begin(); iterator != sabine.end(); ++iterator ) { //geht liste durch mit iterator
+		if (*iterator % 2 == 0) { //alle geraden Zahlen werden entfernt
+			iterator = sabine.erase(iterator);
+			
+		}
+	}
+	print_list(sabine);
+
+	//map
+	map<int, string> m; //schlüssel ist int, value ist string
+	m[3] = "naruto";
+	m[1] = "kakashi";
+	m[2] = "fisch";
+	print_map(m); //sorted by key
+	m.erase(2);
+	print_map(m);
+
+
+
+
+	return 0;
+}

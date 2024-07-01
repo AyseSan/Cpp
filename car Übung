@@ -1,3 +1,13 @@
+- Argumente Datei einlesen
+- Werte als Objekte speichern und in Liste
+- sortieren
+- Operatoren überladen
+
+
+
+
+
+
 Car.h
 #pragma once
 #include <string>

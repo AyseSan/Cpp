@@ -1,0 +1,143 @@
+Klasse.h
+#pragma once
+#include <string>
+#include "Test.h"
+
+using namespace std;
+
+class Klasse
+{
+private:
+	string name;
+	int zahl;
+	Test klo; //für Aggregation Objekt von Test erstellen
+
+public:
+	Klasse(); //Standardkonstruktor
+	Klasse(string, int); //Parametrisierter Konstruktor
+	~Klasse(); //Destruktor
+	//Klasse(string = "brause", int = 3) -> Default Parameter
+	void print();
+	void aggregieren();
+	void callbyValue(int);
+	void callbyReference(int&);
+
+	//Operatoren überladen
+	friend ostream& operator<<(ostream& os, const Klasse& klasse); 
+	friend istream& operator>>(istream& is, Klasse& klasse);
+
+	friend Klasse operator+(const Klasse& k1, const Klasse& k2);
+
+	
+};
+
+Klasse.cpp
+#include "Klasse.h"
+#include <iostream>
+
+using namespace std;
+
+/*
+Klasse::Klasse() { //Standardkonstruktor
+	name = "solo";
+	zahl = 0;
+}
+
+Klasse::Klasse(string name_in, int zahl_in) { //parametrisierter Konstruktor
+	name = name_in;
+	zahl = zahl_in;
+}
+*/
+
+//Initialisierungsliste
+Klasse::Klasse() : name("mudda"), zahl(0) {} //Standardkonstruktor
+Klasse::Klasse(string name_in, int zahl_in) : name(name_in), zahl(zahl_in) {} //parametrisierter Konstruktor
+
+Klasse::~Klasse() {
+	//cout << "Destructed" << name << endl; //nicht nötig
+}
+
+
+void Klasse::print() {
+	cout << "Klasse: " << name << endl;
+	cout << "Zahl: " << zahl << endl;
+}
+
+void Klasse::aggregieren() { //Aggregation und Methode von Test benutzen
+	klo.printen();
+}
+
+void Klasse::callbyValue(int num) {
+	num = 100; //Ändern des Wertes innerhalb der Funktion
+	cout << "innerhalb der Funktion: " << num << endl;
+}
+
+void Klasse::callbyReference(int& num) {
+	num = 100; //Ändern des Wertes innerhalb der Funktion
+	cout << "innerhalb der Funktion: " << num << endl;
+}
+
+ostream& operator<<(ostream& os, const Klasse& klasse) {
+	os << "Name: " << klasse.name << "\nzahl: " << klasse.zahl;
+	return os;
+}
+
+istream& operator>>(istream& is, Klasse& klasse) {
+	is >> klasse.name >> klasse.zahl;
+	return is;
+}
+
+Klasse operator+(const Klasse& k1, const Klasse& k2) {
+	return Klasse("", k1.zahl + k2.zahl);
+}
+
+
+
+#pragma once
+
+#include <iostream>
+#include <string>
+#include "Klasse.h"
+#include "Test.h"
+
+using namespace std;
+
+int main() {
+
+	//Klasse, Objekt und Methode
+	Klasse gerd;
+	Klasse eray("MeinMann", 173);
+	gerd.print();
+	eray.print();
+
+	// dynamisch Objekt anlegen
+	Klasse* zero = new Klasse("dynamic", 7);
+	zero->print();
+	delete zero;
+
+	//Aggregation
+	Klasse klo;
+	klo.aggregieren();
+
+	//callbyValue & callbyReference
+	int mudau = 34;
+	gerd.callbyValue(mudau);
+	cout << "Value: " << mudau << endl; //Value=34, weil er nur eine Kopie von mudau bekommt und nicht den Wert ändern kann
+	gerd.callbyReference(mudau);
+	cout << "reference: " << mudau << endl; //reference = 100, weil die Referenz erlaubt dass mudau verändert wird
+
+	//überladene Operatoren << & >>
+	cout << "Enter Name and Zahl: " << endl;
+	Klasse fisch;
+	cin >> fisch;
+	cout << endl;
+	cout << fisch << endl;
+	
+	//Operator +
+	Klasse result = fisch + eray;
+	cout << result << endl;
+	
+    
+
+	return 0;
+}

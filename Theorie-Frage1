@@ -1,0 +1,103 @@
+Theorie-Fragen
+
+/* 1. Objekte dynamisch anlegen 
+Klasse* zero = new Klasse("dynamic", 7); -> new reserviert Speicher für Objekt vom Typ "Klasse" und gibt zeiger auf Objekt zurück
+	zero->print();
+	delete zero; -> gibt Speicher wieder frei
+
+	 - um Speicher für Objekte zur Laufzeit auf heap zu reservieren
+	- wenn Anzahl und Lebensdauer zur Kompilierzeit nicht bekannt, sondern erst zur Laufzeit
+	- Gründe: Flexibel, Lebensdauer, Speicherverwaltung (heap größer)
+	*/
+
+/* 2. this-Pointer
+	Klasse::Klasse(string name, int zahl) {
+	this->name = name; }this->name greifen auf member-Variable, Zeiger auf aktuelles Objekt
+	this->zahl = zahl;
+	*/
+
+/* Destruktor wird vor löschen von Objekt automatisch aufgerufen*/
+
+/*Aggregation
+- hat eine- Beziehung zwischen zwei Klassen
+- durch Aggregation Funktionen und Variablen von anderen Klassen verwendbar
+- */
+
+/*Überladen
+#include <iostream>
+using namespace std;
+
+int add(int a, int b) {
+	return a + b;
+}
+
+double add(double a, double b) {
+	return a + b;
+}
+
+int main() {
+	cout << "Sum of ints: " << add(2, 4) << endl;        // Ruft die int-Version von add auf
+	cout << "Sum of doubles: " << add(3.13, 2.71) << endl; // Ruft die double-Version von add auf
+	return 0;
+}
+- erlaubt es mehrere Funktionen mit gleichen Namen zu definieren*/
+
+/*Vererbung
+class Fieber : public Klasse {
+public: 
+	void messen();
+};
+- ermöglicht, eine neue Klasse zu erstellen, die die Eigenschaften einer bestehende Klasse erbt
+- Fieber darf Methoden und so von Klasse benutzen in main
+*/
+
+/*Virtuelle Methoden
+virtual void methode(); -> so wirds definiert, nur in basisklasse
+- damit können die abgeleiteten Klassen Funktion überschreiben so: void methode() override {...}
+*/
+
+/*Operatoren überladen
+- macht sinn bei Objekten die man eingeben oder ausgeben möchte
+*/
+
+/*friend
+friend void befreundet(Klasse &a, int name)
+befreundet(ja, 24);
+- friend Funktionen gehören nicht zur Klasse
+- aber haben Zugriff auf private Member und Methoden*/
+
+/*const
+const int size = 20
+- Compiler verhindert veränderungen
+- Methoden die keine Daten ändern: void print() const;*/
+
+/*referenz
+- eine bereits existierende Variable oder Objekt
+- Änderungen daran direkt auf Originalobjekt*/
+
+/*auto
+- Compiler soll Datentyp einer Variable selbst herausfinden*/
+
+
+
+/* pointer und arrays
+int arr[5] = {10, 20, 30, 40, 50};
+int* pointer = arr; pointer zeigt auf das erste Element des Arrays
+
+for(int i = 0; i < 5; ++i) { Ausgabe Array über zeiger
+	cout << "array: " << i << *(pointer + i) << endl;
+	}
+
+
+for(int i = 0; i < 5; ++i) { Ändern der Array Elemente über Zeiger
+	*(pointer + i) = *(pointer + i) * 2; Elemente werden verdoppelt
+}
+
+Ausgabe des Arrays
+for(int i = 0; i < 5; ++i) {
+	cout << "array: " << i << arr[i] << endl;
+	}
+
+
+- für die Speicherung einer Adresse der Variable
+*/

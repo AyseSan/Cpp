@@ -1,3 +1,14 @@
+- Datei einlesen und ausgeben
+- liste + iterieren
+- liste methoden
+- for-schleife
+- vektor
+- map+ + methoden
+
+
+
+
+
 #include <iostream>
 #include <iomanip>
 #include <string>

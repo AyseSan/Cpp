@@ -1,0 +1,67 @@
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <string>
+#include <algorithm>
+#include <sstream>
+#include <list>
+ 
+using namespace std;
+
+int main(int argc, char* argv[]) {
+
+		if (argc != 2) { //Fehlermeldung
+			cerr << "Usage: " << argv[0] << " [input-file] [output-file]" << endl;
+			cerr << "   input-file must be an existing text file" << endl;
+			return 64;
+		}
+
+		ifstream infile;
+		infile.open(argv[1]);
+		
+		string line;
+		list<int> zahl;
+		int n;
+		int zaehler = 0;
+		
+		// n liest jeden int wert aus infile
+		while (infile >> n) {
+			zahl.push_back(n); //jeder int wert wird in liste eingefügt
+		}
+
+		for (int e : zahl) { // e speichert jedes Element aus Zahl
+			zaehler++;
+		}
+		cout << "Anzahl gelesener Werte: " << zaehler << endl;
+
+		zahl.sort();
+		auto it = zahl.begin();
+		cout << "Kleinste Zahl: " << *it << endl;
+		cout << "Groesste Zahl: " << zahl.back() << endl;
+		
+		int summe = 0;
+		for (int s : zahl) {
+			summe = summe + s;
+		}
+		cout << "Summe aller Zahlen: " << summe << endl;
+
+		double mittelwert = static_cast<double>(summe) / static_cast<double>(zaehler);
+		cout << "Mittelwert: " << mittelwert << endl;
+
+		int median;
+		if (zaehler % 2 == 0) {
+			median = zaehler / 2;
+			
+		}
+		else {
+			median = zaehler / 2;
+			
+			
+		}
+		*it = median;
+		advance(it, median); // an die Stelle des Iterators zeigen, so wichtig!
+		
+	
+		cout << "Median: "<< *it;
+	return 0;
+}

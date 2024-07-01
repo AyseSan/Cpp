@@ -1,3 +1,10 @@
+- Klassen + Objekten
+- Aggregation
+- überladener Operator
+
+
+
+
 Klasse.h
 #pragma once
 #include <string>

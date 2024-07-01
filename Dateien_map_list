@@ -1,3 +1,12 @@
+- Datei einlesen + rausschreiben ohne arg
+- Datei einlesen + rausschreiben mit arg
+- list -> print
+- map -> print
+
+
+
+
+
 #include <iostream>
 #include <iomanip>
 #include <fstream>

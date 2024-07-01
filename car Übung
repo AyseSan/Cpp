@@ -1,0 +1,104 @@
+Car.h
+#pragma once
+#include <string>
+
+using namespace std;
+
+class Car
+{
+private: 
+	
+public:
+	Car(string name, int km, double alter);
+	string name;
+	int km;
+	double alter;
+
+	friend istream& operator>>(istream& in, Car& car);
+	friend ostream& operator<<(ostream& out, const Car& car);
+
+  //zum sortieren von Objekte werden Operatoren gebraucht
+	bool operator<(const Car& araba) const {
+		if (km == araba.km) {
+			return alter < araba.alter;
+		}
+		else {
+			return km < araba.km;
+
+		}
+		
+		
+	}
+	
+};  
+
+Car.cpp
+#include "Car.h"
+#include <iostream>
+
+using namespace std;
+
+Car::Car(string n, int k, double age) {
+	name = n;
+	km = k;
+	alter = age;
+}
+
+istream& operator>>(istream& in, Car& car) {
+	in >> car.name >> car.km >> car.alter;
+	return in;
+}
+
+ostream& operator<<(ostream& out, const Car& car) {
+	out << car.name << " " << car.km << " " << car.alter;
+	return out;
+}
+
+main.cpp
+#include <iostream>
+#include<string>
+#include <fstream>
+#include "Car.h"
+#include <list>
+
+using namespace std;
+
+int main(int argc, char* argv[]) {
+
+	ifstream datei(argv[1]);
+	
+
+	list<Car> autos;
+	Car car(" ", 0, 0.0);
+	string name;
+	int km;
+	double alter;
+
+	string zeile;
+	/*while (getline(datei, zeile)) {
+		cout << zeile << endl;
+		
+	}*/
+
+	
+	/*while (datei >> name >> km >> alter) {
+		Car car(name, km, alter);
+		autos.push_back(car);
+	} */ //ohne überladenem Operator
+
+	while (datei >> car) {
+		autos.push_back(car);
+	}
+	autos.sort();
+
+	for (const auto& car : autos) {
+		cout << car << endl; // mit Operator
+		// cout << car.name <<" " << car.km << " " << car.alter << endl; -> ohne überladenem Operator
+	}
+
+	
+	
+
+
+	return 0;
+}

@@ -1,0 +1,93 @@
+Theorie
+
+1.1 Erklärung der main()-Funktion:
+Die main()-Funktion ist der Einstiegspunkt jedes C++-Programms. Sie ist notwendig, weil sie die erste Funktion ist, die beim Start eines Programms aufgerufen wird. Der Rückgabewert der main()-Funktion ist ein int, der dem Betriebssystem signalisiert, ob das Programm erfolgreich beendet wurde (0 bedeutet Erfolg, andere Werte zeigen Fehler an).
+
+1.2 Rolle des #include-Präprozessorbefehls:
+Der #include-Befehl fügt den Inhalt einer Datei in das Programm ein, bevor das Programm kompiliert wird. Zum Beispiel #include <iostream> fügt die Standard-Ein-/Ausgabebibliothek ein, die Funktionen wie std::cout bereitstellt. Wenn #include <iostream> weggelassen wird, würden Funktionen wie std::cout nicht erkannt, was zu Kompilierfehlern führt.
+
+ Eine Klasse in C++ kann nur einen Konstruktor haben. (Falsch)
+■ Eine Klasse in C++ kann mehrere Konstruktoren haben. (Richtig)
+■ Eine Klasse kann nur einen Destruktor haben. (Richtig)
+□ Destruktoren können überladen werden. (Falsch)
+■ Konstruktoren können überladen werden. (Richtig)
+■ Destruktoren werden automatisch aufgerufen, wenn ein Objekt aus dem Gültigkeitsbereich fällt. (Richtig)
+
+Aufgabe 3
+Privat (private): Mitglieder sind nur innerhalb der Klasse zugänglich.
+
+cpp
+Code kopieren
+class MyClass {
+private:
+    int secret;
+};
+Geschützt (protected): Mitglieder sind innerhalb der Klasse und in abgeleiteten Klassen zugänglich.
+
+cpp
+Code kopieren
+class MyBase {
+protected:
+    int semiSecret;
+};
+Öffentlich (public): Mitglieder sind von überall zugänglich.
+
+cpp
+Code kopieren
+class MyClass {
+public:
+    int publicInfo;
+};
+
+Vererbung:
+Vererbung ist ein Mechanismus in der objektorientierten Programmierung, bei dem eine Klasse (abgeleitete Klasse) die Eigenschaften und Methoden einer anderen Klasse (Basisklasse) erbt.
+
+Vorteile:
+
+Wiederverwendbarkeit von Code.
+Erleichtert die Erweiterung und Wartung des Codes.
+Ermöglicht das Polymorphismus-Prinzip.
+Probleme:
+
+Kann zu einer komplexen Klassenhierarchie führen.
+Kann die Kopplung zwischen Klassen erhöhen.
+Probleme bei Mehrfachvererbung (Diamantproblem).
+
+Aufgabe 5
+Polymorphismus:
+Polymorphismus ermöglicht es, dass eine Funktion unterschiedliche Formate annehmen kann.
+
+Überladung (Compile-Time Polymorphism):
+Funktionen gleichen Namens, aber mit unterschiedlichen Parametern.
+Überschreibung (Runtime Polymorphism):
+Eine Methode in der abgeleiteten Klasse überschreibt eine Methode in der Basisklasse.
+
+Aufgabe 6
+Aussage 1: Falsch. Eine virtuelle Funktion in der Basisklasse muss nicht unbedingt überschrieben werden.
+Aussage 2: Richtig. Eine rein virtuelle Funktion hat keine Implementierung in der Basisklasse.
+Aussage 3: Falsch. Nicht alle Funktionen in einer abstrakten Klasse müssen rein virtuell sein.
+Aussage 4: Richtig. Eine Klasse mit mindestens einer rein virtuellen Funktion kann nicht instanziiert werden.
+
+Aufgabe 7
+Templates:
+Templates ermöglichen die Generierung von Klassen und Funktionen für verschiedene Datentypen.
+
+Aufgabe 8
+Stack-Speicher:
+
+Vorteile: Schneller Zugriff, automatische Speicherverwaltung.
+Nachteile: Begrenzter Speicher, nur LIFO (Last In, First Out) Zugriff.
+Heap-Speicher:
+
+Vorteile: Größere Flexibilität, dynamische Speicherzuweisung.
+Nachteile: Langsamerer Zugriff, manuelle Speicherverwaltung erforderlich, Risiko von Speicherlecks.
+
+Aufgabe 9
+Konstruktor:
+Ein Konstruktor ist eine spezielle Methode, die aufgerufen wird, wenn ein Objekt einer Klasse erstellt wird.
+
+Aufgabe 10
+Aussage 1: Falsch. Der Operator new wird verwendet, um Speicher dynamisch auf dem Heap zuzuweisen.
+Aussage 2: Richtig. Der Operator delete gibt Speicher zurück, der mit new auf dem Heap zugewiesen wurde.
+Aussage 3: Falsch. delete darf nicht für einen Zeiger auf eine lokale Variable verwendet werden, da dies zu undefiniertem Verhalten führen kann.
+Aussage 4: Richtig. Speicher, der mit new zugewiesen wurde, muss immer mit delete freigegeben werden, um Speicherlecks zu vermeiden.

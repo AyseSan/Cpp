@@ -1,0 +1,100 @@
+#pragma once
+#include <iostream>
+#include <algorithm>
+#include <fstream>
+#include <list>
+#include <iomanip>
+#include <string>
+#include <sstream>
+#include <vector>
+
+using namespace std;
+
+
+void print_list(list<string>& l) { //printet Liste
+	for (string e : l) { // e wird auf jedes Element des containers deklariert, :l gibt an über welchen Container iteriert wird
+		cout << e << ",";
+	}
+	cout << endl;
+}
+
+
+
+int main(int argc, char* argv[]) {
+
+	if (argc != 4) { //Fehlermeldung
+		cerr << "Usage: " << argv[0] << " [input-file] [output-file]" << endl;
+		cerr << "   input-file must be an existing text file" << endl;
+		return 64;
+	}
+
+	
+	vector<double> x;
+	vector<double> y;
+	string r;
+	double test;
+	double mudda;
+	double sabine;
+	vector<pair<double, double>> coord;
+	
+	
+	int xcolummn = stoi(argv[2]);
+	xcolummn -= 1;
+	int ycolumn = stoi(argv[3]);
+	ycolumn -= 1;
+
+	ifstream datei;
+	datei.open(argv[1]);
+
+	while (getline(datei, r)) {
+		stringstream ss(r); //Zeilen in Spalte zerlegen
+		vector<double> col;
+		//cout <<"\t"<<  r << endl;
+
+		while (ss >> test) {
+			col.push_back(test);
+			
+		}
+		
+		
+		coord.push_back(make_pair(col[xcolummn], col[ycolumn]));
+		
+		
+		
+	}
+
+	for (const auto& k : coord) { //const pair<double, double>& k : coord, statt auto geht auch so
+		cout << "(" << k.first << "," << k.second << ")" << endl;
+	}
+	
+	const int rows = 80;
+	const int cols = 25;
+
+	vector<vector<char>> to(cols, vector<char>(rows, '.')); //zweidimensionaler Vektor, nochmal verstehen
+	
+	for (const auto& simba : coord) {
+		int x = simba.first;
+		int y = simba.second;
+
+		//if (y >= 0 && y < rows && x >= 0 && x < cols) {
+		to[x][y] = 'x';// im zweidimensionalen Vektor ist erstes für y-Achse und das zweite für x-Achse
+		
+		//}
+		
+	}
+	
+	for (int i = 0; i < cols; ++i) {
+		for (int j = 0; j < rows; ++j) {
+			cout << to[i][j];
+		}
+		cout << endl;
+	}
+	
+
+	datei.close();
+
+
+
+return 0;
+
+}

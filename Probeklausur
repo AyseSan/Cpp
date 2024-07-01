@@ -1,3 +1,9 @@
+- Dateien einlesen mit arg
+- werte in liste
+- zählen, kleinster wert, größter, median
+
+
+
 #include <iostream>
 #include <fstream>
 #include <iomanip>

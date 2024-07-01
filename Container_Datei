@@ -27,6 +27,7 @@ int main(int argc, char* argv[]) {
 	infile.clear(); //setzt die Fehlerflags wie EOF zurück, aber lesestream immer noch am Ende
 	infile.seekg(0, ios::beg); //seekg steuert Lesekopf, 0 heißt es wird auf die Position verschoben die durch 2.Parameter bestimmt wird
 
+	
 	if (!infile) {
 		std::cerr << "Fehler beim Öffnen der Datei " << argv[1] << "\n";
 		return 1;

@@ -1,0 +1,146 @@
+#include <iostream>
+#include <iomanip>
+#include <string>
+#include <fstream>
+#include <list>
+#include <vector>
+#include <map>
+
+using namespace std;
+//Praxisteil mit Container, Datei aus und einlesen, Argumenten, daten ändern oder manipulieren, ausgeben (formatieren)
+
+int main(int argc, char* argv[]) {
+
+	// Error Meldung
+	if (argc != 4) {
+		cout << "Error";
+		return 64;
+	}
+
+	//Datei einlesen und ausgeben
+	ifstream infile;
+	infile.open(argv[1]);
+	string zeile;
+	while (getline(infile, zeile)) {
+		cout << zeile << endl;
+	}
+	infile.clear(); //setzt die Fehlerflags wie EOF zurück, aber lesestream immer noch am Ende
+	infile.seekg(0, ios::beg); //seekg steuert Lesekopf, 0 heißt es wird auf die Position verschoben die durch 2.Parameter bestimmt wird
+
+	if (!infile) {
+		std::cerr << "Fehler beim Öffnen der Datei " << argv[1] << "\n";
+		return 1;
+	}
+
+	
+
+	//Liste
+	int u;
+	list<int> list;
+
+	// auto it = find(list.begin(), list.end(), 90); -> hier zeigt it auf 90
+
+	//Werte aus File in Liste
+	while (infile >> u) {
+		list.push_back(u);
+	}
+
+	list.sort(); //nach reiheenfolge
+
+		//Liste ausgeben
+	for (int e : list) {
+		cout << e << ",";
+	}
+	cout << endl;
+
+	list.push_back(5);
+	list.push_front(12);
+	list.pop_back();
+	list.push_back(33);
+	list.sort(); //nach reiheenfolge
+	list.remove(1); //entfernt 1
+	list.reverse(); //verkehrtherum sortieren
+	list.unique(); //aufeinanderfolgende dublikate entfernen
+	//list.clear() -> leert liste
+	//list.merge(list2); -> verschmilzt die Listen
+	//list.splice(it, list2); -> Elemente aus list2 an Pos in list einfügen	
+
+
+
+
+		//for schleife mit container und it
+	auto iterator = list.begin();//iterator auf Anfang der List deklariert
+	advance(iterator, 3); // bewegt Iterator um 3 Schritte
+	list.insert(iterator, 24); //fügt an Stelle des It 24 ein
+	for (iterator = list.begin(); iterator != list.end(); ) { // for-schleife, entfernt gerade Zahlen
+		if (*iterator % 2 == 0) {
+			iterator = list.erase(iterator);
+		}
+		else {
+			++iterator; // wenn ungerade Zahl, iterator eins weiter
+		}
+	}
+
+
+
+
+	for (int e : list) {
+		cout << e << ",";
+	}
+	cout << "erstes Element: " << list.front() << endl;
+	cout << "letzes Element: " << list.back() << endl;
+	cout << "Größe der Liste: " << list.size() << endl;
+
+	if (list.empty()) {
+		cout << "leer" << endl;
+	}
+	else {
+		cout << "voll" << endl;
+	}
+
+	//Vektor
+	vector<int> v;
+	ifstream datei(argv[1]);
+	int num;
+	while (datei >> num) {
+		v.push_back(num);
+	}
+	v.resize(5); //setzt Größe des Vektors auf 5
+	for (int n : v) {
+		cout << n << " ";
+	}
+	cout << '\n';
+	cout << v.capacity() << endl;
+	cout << v.at(2) << endl; //zugriff auf Element auf dieser Position = v[2]
+	//den rest wie bei List
+	
+
+	//Map
+	ifstream file(argv[2]);
+	map<string, int> m;
+	string word;
+
+	//file in map + zählt wie oft wort vorkommt
+	while (file >> word) {
+		m[word]++;
+	}
+
+	for (const auto& pair : m) {
+		cout << pair.first << ":" << pair.second << "\n";
+	}
+
+	int count = m.at("Eray"); //zugriff auf wert mit schlüssel eray
+	cout << "Anzahl Eray: " << count << endl;
+	auto it = m.find("sevde");
+	if (it != m.end()) {
+		std::cout << "Anzahl sevde: " << it->second << "\n";
+	}
+
+	//In Datei reinschreiben
+	ofstream result(argv[3], ios::trunc);
+	for (int v : v) {
+		result << v << ",";
+	}
+
+	return 0;
+}

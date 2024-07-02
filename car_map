@@ -1,0 +1,120 @@
+Car.h
+#pragma once
+#include <string>
+
+using namespace std;
+
+class Car
+{
+public:
+	string name;
+	int km;
+	int alter;
+	Car(string name, int km, int alter);
+	Car();
+
+	bool operator <(const Car& car) const {
+		if (car.alter == alter) {
+			return car.km < km;
+		}
+		else {
+			return car.alter < alter;
+		}
+	}
+
+	friend ostream& operator<<(ostream& os, const Car& auto1);
+	friend istream& operator>>(istream& is, Car& auto2);
+
+	
+};
+
+Car.cpp
+#include "Car.h"
+#include <iostream>
+
+Car::Car(string name, int km, int alter) {
+	this->name = name;
+	this->km = km;
+	this->alter = alter;
+}
+
+Car::Car() {
+
+}
+
+ostream& operator<<(ostream& os, const Car& car) {
+	os << car.name << "  " << car.km << " " << car.alter;
+	return os;
+}
+
+istream& operator>>(istream& is, Car& auto2) {
+	is >> auto2.name >> auto2.km >> auto2.alter;
+	return is;
+}
+
+main.cpp
+#include <iostream>
+#include <string>
+#include <fstream>
+#include "Car.h"
+#include <map>
+#include <list>
+
+using namespace std;
+
+
+
+int main(int argc, char* argv[]) {
+
+	ifstream datei(argv[1]);
+	if (!datei) {
+		std::cerr << "Fehler beim Öffnen der Datei!" << std::endl;
+		return 1;
+	}
+
+	Car car(" ", 0, 0);
+
+	string zeile;
+	/*while (getline(datei, zeile)) {
+		cout << zeile << endl;
+	}*/
+
+	string name;
+	int km;
+	int alter;
+
+	map<string, Car> map;
+
+	//ohne Operator
+	//Werte aus Datei werden in die Variablen reingschreiben
+	/*while (datei >> name >> km >> alter) {
+		Car car(name, km, alter); //je Zeile wird als Objekt gespeichert
+		map[name] = car; //Objkete in map gespeichert
+	}*/
+	
+	while (datei >> car) {
+		map[car.name] = car;
+	}
+
+
+	//zum sortieren lieber convertieren in list oder vector
+	list<Car> list;
+	for (auto eingabe : map) {
+		list.push_back(eingabe.second); //second ist Car, weil er kann nur int nehmen
+	}
+
+	list.sort();
+
+	for (auto c : list) {
+		cout << c << endl;
+	}
+
+	//Map ohne sort ausgeben
+	/*for (const auto& e : map) { //Map ausgeben
+		const Car& c = e.second; //sagen dass Objekt zu Car gehört
+		cout << c.name << c.km << c.alter << endl;
+	}*/
+	
+
+	return 0;
+}
